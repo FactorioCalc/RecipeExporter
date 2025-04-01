@@ -1,16 +1,21 @@
 #!/usr/bin/python3
 
 import json
-from shutil import copytree, ignore_patterns
+import os
+import shutil
 import subprocess
 
-with open('RecipeExporter/info.json') as f:
+with open('info.json') as f:
   j = json.load(f)
 
 version = j['version']
 
-copytree('RecipeExporter', f'RecipeExporter_{version}',
-         ignore=ignore_patterns('*~', '#*', 'mk-zip.py'))
+targetdir = f'RecipeExporter_{version}';
 
-subprocess.run(['zip', '-9r', f'RecipeExporter_{version}.zip',  f'RecipeExporter_{version}'],
+os.mkdir(targetdir)
+
+for f in ['control.lua', 'info.json', 'json.lua']:
+  shutil.copy2(f, targetdir)
+
+subprocess.run(['zip', '-9r', '--to-crlf', f'{targetdir}.zip',  targetdir],
                check=True)
