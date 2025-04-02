@@ -15,7 +15,7 @@ targetzip = f'{targetdir}.zip'
 
 os.mkdir(targetdir)
 
-for f in ['control.lua', 'info.json', 'json.lua']:
+for f in ['control.lua', 'info.json', 'json.lua', 'changelog.txt']:
   shutil.copy2(f, targetdir)
 
 try:
